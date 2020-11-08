@@ -3,13 +3,12 @@ import './app.scss';
 import { withService } from '../hoc';
 import { Switch, Route } from 'react-router-dom';
 import { HomePage, CartPage } from '../pages';
+import ShopHeader from '../shop-header';
 const App = ({ bookshopService }) => {
   console.log(bookshopService.getBooks());
   return (
-    <div className="App">
-      <header className="App-header">
-       <h1>Hello redux</h1>
-      </header>
+    <main role="main" className="container">
+      <ShopHeader numItems={5} total={210}/>
       <Switch>
         <Route path="/"
         component={HomePage}
@@ -19,7 +18,7 @@ const App = ({ bookshopService }) => {
         />
       </Switch>
 
-    </div>
+    </main>
   );
 }
 
