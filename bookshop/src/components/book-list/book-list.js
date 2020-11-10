@@ -4,28 +4,35 @@ import { connect } from 'react-redux';
 import './book-list.scss';
 import BookListItem from '../book-list-item';
 import { withService } from '../hoc';
-import { booksLoaded } from '../../actions';
+import { booksLoaded, booksRequested, booksError } from '../../actions';
 import { compose } from '../../utils';
 import Spinner from '../spinner';
+import ErrorIndicator from '../error-indicator';
 
 
 class BookList extends Component {
 
    componentDidMount() {
-       const { bookshopService, booksLoaded } = this.props;
+       const { bookshopService, booksLoaded, booksRequested, booksError } = this.props;
+      booksRequested(); 
       bookshopService.getBooks()
-       .then((data) => booksLoaded(data));
+       .then((data) => booksLoaded(data))
+       .catch((err) => booksError(err));
    }
 
     render(){
-        const { books, loading } = this.props;
+        const { books, loading, error } = this.props;
 
         if(loading){
             return (
                 <Spinner />
             )
+        } 
+
+        if(error){
+            return <ErrorIndicator />;
         }
-        
+
         return (
             <ul className="book-list">
                 {
@@ -40,12 +47,14 @@ class BookList extends Component {
     } 
 };
 
-const mapStateToProps = ({ books, loading }) => {
-    return { books, loading };
+const mapStateToProps = ({ books, loading, error }) => {
+    return { books, loading, error };
 };
 
 const mapDispatchToProps = {
-  booksLoaded
+  booksLoaded,
+  booksRequested,
+  booksError
 };
 
 export default compose(withService(),
