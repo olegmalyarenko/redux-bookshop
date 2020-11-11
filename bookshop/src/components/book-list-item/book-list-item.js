@@ -1,7 +1,7 @@
 import React from 'react';
 import './book-list-item.scss';
 
-const BookListItem = ({ book }) => {
+const BookListItem = ({ book, onAddedToCart }) => {
     const { title, author, price, coverImg } = book;
     return (
         <div className="book-list-item">
@@ -9,10 +9,12 @@ const BookListItem = ({ book }) => {
                 <img src={coverImg} alt='cover image' />
             </div>
             <div className="book-details"> 
-              <a href="#" className="book-title">{title}</a>  
-              <div className="book-author">{author}</div>
-              <div className="book-price">{price}</div>
-              <button className="btn btn-info add-to-card">Add to cart</button>
+                <a href="#" className="book-title">{title}</a>  
+                <div className="book-author">{author}</div>
+                <div className="book-price">{price}</div>
+                <button 
+                onClick={onAddedToCart}
+                className="btn btn-info add-to-card">Add to cart</button>
             </div> 
         </div>
     );

@@ -1,3 +1,3 @@
-import BookList from './book-list.js';
+import BookListContainer from './book-list-container.js';
 
-export default BookList;
+export default  BookListContainer;
